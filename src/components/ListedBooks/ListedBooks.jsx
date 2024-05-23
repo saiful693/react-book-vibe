@@ -1,55 +1,64 @@
+
 import { useEffect, useState } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { NavLink, useLoaderData } from "react-router-dom";
 import { getStoredReadBook, getStoredWishList } from "../localStorage";
 import ReadBooks from "../ReadBooks/ReadBooks";
+import './ListedBooks.css'
 const ListedBooks = () => {
-  
-    const handleNav = filter => {
-        if (filter === 'read-book') {
-            setReadBooks(readBook);
-        }
-        else if (filter === 'wish-list') {
-            // const remoteJobs=appliedJobs.filter(job => job.remote_or_onsite === 'Remote');
-            // setWishList(wishList);
-            setReadBooks(wishList);
-        }
-
-    }
-
 
     const books = useLoaderData();
     const [readBook, setReadBooks] = useState([]);
-    const [wishList, setWishList] = useState([]);
-
-    // console.log(readBook)
-
+    const [wishListBook, setWishListBooks] = useState([]);
+    const [activeTab, setActiveTab] = useState('read');
 
 
 
+    
 
-    useEffect(() => {
-        const storedWishlistIds = getStoredWishList();
-        if (books.length > 0) {
-            const wishList = books.filter(book => storedWishlistIds.includes(book.bookId))
-            setWishList(wishList)
-
+    const handleBooksFilter= filter =>{
+        if(filter === 'rating'){
+            const ratingReadBook=[...readBook];
+            const readBookDsc=ratingReadBook.sort((a,b)=> b.rating-a.rating);
+            
+             displayBooks = activeTab === 'read' ? setReadBooks(readBookDsc) : setWishListBooks(readBookDsc);
+           
         }
+        else if(filter === 'number-of-pages'){
+            const pagesReadBook=[...readBook];
+            const readBookDsc=pagesReadBook.sort((a,b)=> b.totalPages-a.totalPages);
+            displayBooks = activeTab === 'read' ? setReadBooks(readBookDsc) : setWishListBooks(readBookDsc);
+        }
+        else if(filter === 'published-year'){
+            const publishedReadBook=[...readBook];
+            const readBookDsc=publishedReadBook.sort((a,b)=> b.yearOfPublishing-a.yearOfPublishing);
+            displayBooks = activeTab === 'read' ? setReadBooks(readBookDsc) : setWishListBooks(readBookDsc);
+        }
+    }
 
-    }, [books])
+
+
+
+
 
     useEffect(() => {
-        const storedBookIds = getStoredReadBook();
+       
+         const storedBookIds = getStoredReadBook(); 
+         const  storedWishListIds=getStoredWishList(); 
+        
         if (books.length > 0) {
             const readBook = books.filter(book => storedBookIds.includes(book.bookId))
             setReadBooks(readBook)
-
+            const wishListBook = books.filter(book => storedWishListIds.includes(book.bookId))
+            setWishListBooks(wishListBook)
+            
         }
 
     }, [books])
 
 
 
+    let displayBooks = activeTab === 'read' ? readBook : wishListBook;
 
 
     return (
@@ -61,15 +70,17 @@ const ListedBooks = () => {
                 <details className="dropdown mt-8 ">
                     <summary className="m-1 btn font-semibold bg-[#23BE0A] text-white ">Sort By<IoIosArrowDropdown className="text-xl" /></summary>
                     <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-
+                        <li onClick={() => handleBooksFilter('rating')}><a>Rating</a></li>
+                        <li onClick={() => handleBooksFilter('number-of-pages')}><a>Number of pages</a></li>
+                        <li onClick={() => handleBooksFilter('published-year')}><a> Published year</a></li>
                     </ul>
 
                 </details>
             </div>
             <div>
-                <ul className="flex border-b">
-                    <li onClick={() => handleNav('read-book')} className="border p-4 rounded-2xl mr-4"><NavLink to="/listed-books/read-books">Read Books</NavLink></li>
-                    <li onClick={() => handleNav('wish-list')} className="border p-4 rounded-2xl"><NavLink to="/listed-books/wishlist-books">Wishlist Books</NavLink></li>
+                <ul className="flex">
+                    <li onClick={() => setActiveTab('read')} className="rounded-2xl mr-4 "><NavLink className="p-4 rounded-xl" to="/listed-books/read-books">Read Books</NavLink></li>
+                    <li onClick={() => setActiveTab('wishlist')} className="rounded-2xl"><NavLink className="p-4 rounded-xl" to="/listed-books/wishlist-books">Wishlist Books</NavLink></li>
                 </ul>
 
             </div>
@@ -78,7 +89,7 @@ const ListedBooks = () => {
                 {
 
 
-                    readBook.map(book => <ReadBooks key={book.bookId} book={book}></ReadBooks>)
+                    displayBooks.map(book => <ReadBooks key={book.bookId} book={book}></ReadBooks>)
 
 
                 }
@@ -90,6 +101,4 @@ const ListedBooks = () => {
 export default ListedBooks;
 
 
-{/* <li onClick={() => handleJobsFilter('all')}><a>All</a></li>
-                        <li onClick={() => handleJobsFilter('remote')}><a>Remote</a></li>
-                        <li onClick={() => handleJobsFilter('onsite')}><a>Onsite</a></li> */}
+
