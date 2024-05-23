@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { getStoredReadBook } from "../localStorage";
 
 
@@ -25,10 +25,10 @@ const PagesToRead = () => {
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
 
     return (
-        <div className="max-w-6xl bg-[#13131308] mt-20">
+        <div style={{width: '100%', height: 800}} className="max-w-6xl bg-[#13131308] mt-20">
+            <ResponsiveContainer>
             <BarChart
-                width={1000}
-                height={800}
+            
                 data={readBook}
                 margin={{
                     top: 20,
@@ -46,6 +46,8 @@ const PagesToRead = () => {
                     ))}
                 </Bar>
             </BarChart>
+            </ResponsiveContainer>
+           
         </div>
     );
 };
