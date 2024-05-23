@@ -23,7 +23,7 @@ const Header = () => {
                         }
                     </ul>
                 </div>
-                <a className="btn btn-ghost font-bold text-3xl">Book Vibe</a>
+                <a className="btn btn-ghost font-bold text-2xl md:text-3xl">Book Vibe</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -33,8 +33,8 @@ const Header = () => {
                 </ul> 
             </div>
             <div className="navbar-end">
-                <a className="btn bg-[#23BE0A] text-white font-semibold rounded-lg">Sign In</a>
-                <a className="btn bg-[#59C6D2] text-white font-semibold rounded-lg ml-2">Sign Up</a>
+                <a className="btn btn-sm md:btn-md bg-[#23BE0A] text-white font-semibold rounded-lg">Sign In</a>
+                <a className="btn btn-sm md:btn-md bg-[#59C6D2] text-white font-semibold rounded-lg ml-2">Sign Up</a>
             </div>
         </div>
     );

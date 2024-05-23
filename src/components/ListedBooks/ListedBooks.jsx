@@ -64,10 +64,10 @@ const ListedBooks = () => {
     return (
         <div>
             <div>
-                <h2 className="h-28 flex items-center justify-center w-full text-3xl font-bold bg-[#1313130D]">Books</h2>
+                <h2 className="h-14 md:h-28 flex items-center justify-center w-full text-3xl font-bold bg-[#1313130D]">Books</h2>
             </div>
             <div className="flex justify-center items-center">
-                <details className="dropdown mt-8 ">
+                <details className="dropdown my-8 ">
                     <summary className="m-1 btn font-semibold bg-[#23BE0A] text-white ">Sort By<IoIosArrowDropdown className="text-xl" /></summary>
                     <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                         <li onClick={() => handleBooksFilter('rating')}><a>Rating</a></li>
@@ -85,7 +85,7 @@ const ListedBooks = () => {
 
             </div>
 
-            <div>
+            <div className="mt-5">
                 {
 
 
