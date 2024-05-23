@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       {
          path: '/listed-books',
          element: <ListedBooks></ListedBooks>,
-         loader: () =>fetch(`/books.json`),
+         loader: () =>fetch('books.json'),
          children:[
           {
             path: '/listed-books/read-books',
@@ -44,14 +44,14 @@ const router = createBrowserRouter([
       {
         path: '/pages-to-read',
         element: <PagesToRead></PagesToRead>,
-        loader: () =>fetch('/public/books.json'),
+        loader: () =>fetch('books.json'),
 
       },
    
       {
         path: '/book/:id',
         element:<BookDetails></BookDetails>,
-        loader: () => fetch('/public/books.json')
+        loader: () => fetch('books.json')
       }
     ]
   },
@@ -62,3 +62,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <RouterProvider router={router} />
   </React.StrictMode>,
 )
+
